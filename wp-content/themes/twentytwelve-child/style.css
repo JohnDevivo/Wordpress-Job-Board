@@ -1,0 +1,61 @@
+/*
+ Theme Name:   Twenty Twelve Child
+ Theme URI:    
+ Description:  Twenty Twelve Child Theme
+ Author:       John Doe
+ Author URI:   http://example.com
+ Template:     twentytwelve
+ Version:      1.0.0
+ Tags:         light, dark, two-columns, right-sidebar, responsive-layout, accessibility-ready
+ Text Domain:  twenty-twelve-child
+*/
+
+@import url("../twentytwelve/style.css");
+
+/* =Theme customization starts here */
+
+.listing-header {z-index: 20;
+				
+				background-color: lightgrey;
+				height: 100px;
+				}
+
+
+/*.spacer {height: 100px;}*/
+
+.listing-div {width: 45%;
+			height: 400px;
+			border: 1px solid green;
+			display: inline-block;
+			vertical-align: top;
+			}
+
+.thumb-contain {overflow: scroll;
+				height: 300px;}
+
+
+#job-listings {margin-right: 3%;}
+
+#skills-listings {}
+
+.listing-thumb {border: 1px solid red;
+				padding: 5px;}
+
+
+@media screen and (max-width: 600px) {
+
+	.listing-div {width: 100%;
+					}
+
+
+
+}
+
+@media screen and (max-width: 960px) {
+
+	
+	.listing-div {width: 100%;
+					}
+
+
+}
