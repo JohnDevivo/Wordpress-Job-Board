@@ -66,7 +66,7 @@ get_header(); ?>
 		</div>
 		<div id='skills-listings' class='listing-div' >
 			<h3>Skills Listings</h3>
-			helasjd askdjas ldkjas dlkasjd aslkdj aslkdjas dlkasjd aslkdj asdlkjsa dlksaj dsalkdj asldkjas dlasdj aslkdjas oiddu oiduasodinasdasnmdaslkdj lkjs dlaskjd a
+			helasjd askdjas ldkjas dlkasjd aslkdj aslkdjas dlkasjd aslkdj asdlkjsa dlksaj dsalkdj asldkjas dlasdj aslkdjas oiddu oiduasodinasdasnmdaslkdj lkjs dlaskjd aaskdja sdlkajs dlaksjd aslkd
 		</div>
 
 	</div>
