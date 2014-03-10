@@ -441,17 +441,16 @@ th {
 
 /*============normalize end===================*/
 
-.listing-header {z-index: 20;
-				
+.listing-header {
+				padding: 10px;
 				background-color: lightgrey;
-				height: 100px;
+				height: auto;
 				}
 
 
 /*.spacer {height: 100px;}*/
 
 .listing-div {width: 45%;
-			height: 400px;
 			border: 1px solid green;
 			display: inline-block;
 			vertical-align: top;
@@ -470,11 +469,18 @@ th {
 
 #titlediv {margin: 0}
 
+.posting_title {font-size: 30px;}
 
-
-
-
-
+.posting_main {
+				width: 65%;
+				display: inline-block;
+				vertical-align: top;}
+.posting_sidebar {
+				  width: 30%;
+				  display: inline-block;
+				vertical-align: top;}
+.posting_subheading {font-size: 24px;
+					text-decoration: underline;}
 /*small*/
 @media screen and (max-width: 600px) {
 
