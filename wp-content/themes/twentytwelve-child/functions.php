@@ -1,7 +1,30 @@
 <?php 
 
+// redirects blank search from index page to show all posts
+add_filter( 'request', 'blank_search' );
+function blank_search( $query_vars ) {
+    if( isset( $_GET['s'] ) && empty( $_GET['s'] ) ) {
+        $query_vars['s'] = " ";
+    }
+    return $query_vars;
+}
 
 
+function change_default_title( $title ){
+ 
+    $screen = get_current_screen();
+ 
+    if ( 'job_posting' == $screen->post_type ){
+        $title = 'Enter Description Here - This is what will show up in Search';
+    }
+    if ('skills_posting' == $screen->post_type){
+    	$title = 'Enter Description Here - This is what will show up in Search';
+    }
+ 
+    return $title;
+}
+ 
+add_filter( 'enter_title_here', 'change_default_title' );
 
 // adds a custom post type for job posting
 add_action('init', 'create_job_posting');
@@ -33,8 +56,7 @@ function create_job_posting() {
 		'capability_type' => 'post',
 		'hierarchical' => false,
 		'menu_position' => null,
-		 // 'supports' => array('title','editor','thumbnail')
-		'supports' => array('title', 'thumbnail')
+		'supports' => array('title')
 	  ); 
 
 	register_post_type( 'job_posting' , $args );
@@ -133,7 +155,7 @@ function create_job_posting() {
 
 	
 
-	function save_details(){
+	function save_job_postings(){
   	global $post;
  
 	  update_post_meta($post->ID, "job_title", $_POST["job_title"]);
@@ -144,7 +166,7 @@ function create_job_posting() {
 	  update_post_meta($post->ID, "job_apply", $_POST["job_apply"]);
 	}
 
-	add_action('save_post', 'save_details');
+	add_action('save_post', 'save_job_postings');
 } //create_job_posting end
 
 
@@ -194,25 +216,13 @@ function get_the_current_tax_terms_jobs( $post_id )
     
 }
 
-function change_default_title( $title ){
- 
-    $screen = get_current_screen();
- 
-    if ( 'job_posting' == $screen->post_type ){
-        $title = 'Enter Description Here - This is what will show up in Search';
-    }
- 
-    return $title;
-}
- 
-add_filter( 'enter_title_here', 'change_default_title' );
-
-
-function get_all_listings($post_type){
-$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+// gets recent listings for the home page
+function get_recent_listings($post_type)
+{
+	$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
 	$args = array(
-	'posts_per_page'   => -1,
+	'posts_per_page'   => 20,
 	'offset'           => 0,
 	'category'         => '',
 	'orderby'          => 'post_date',
@@ -228,24 +238,33 @@ $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 	'post_status'      => 'publish',
 	'suppress_filters' => true );
 
-	 $posts_array = get_posts( $args );
+	$posts_array = get_posts( $args );
 
-	 // foreach ($posts_array as  $value) {
-	 // 	echo $value->post_title ."<br>";
-	 // }
-
-	return $posts_array;
+	$job_listings_array = array();
 	
+	// creates a formated listing for each entry
+	foreach ($posts_array as $key => $listing) {
+		$job_title = $listing->job_title;
+		$post_title = $listing->post_title;
+		$company_name =  $listing->company_name;
+		$job_description = $listing->job_description;
+		$post_id = $listing->ID;
+		$permalink = get_permalink($post_id);
+		$new_div = '<div class="listing-thumb">';
+		$new_div .= '<b>' . $post_title . '</b>';
+		$new_div .= '<p>' . $company_name .'</p>';
+		$new_div .= '<p>' .substr($job_description, 0,200) .'...</p>';
+		$new_div .='<a href="'. $permalink .'"> View Job Posting </a>';
+		$new_div .= '</div>';
+		array_push($job_listings_array, $new_div);	
+	}
+	return $job_listings_array;
+
 }
 
-// redirects blank search from index page to show all posts
-add_filter( 'request', 'blank_search' );
-function blank_search( $query_vars ) {
-    if( isset( $_GET['s'] ) && empty( $_GET['s'] ) ) {
-        $query_vars['s'] = " ";
-    }
-    return $query_vars;
-}
+
+
+
 
 
 function job_search_form($form){
@@ -295,6 +314,146 @@ function job_search_form($form){
 
     return $form;
 }
+
 add_filter( 'get_search_form', 'job_search_form' );
+
+
+function job_description($id){
+	$post = get_post_custom($id);
+	return $post['job_description'][0];
+
+}
+
+
+
+// create custom post for skills listing
+
+	add_action('init', 'create_skills_posting');
+ 
+function create_skills_posting() {
+ 
+	$labels = array(
+		'name' => _x('Skills Posting', 'post type general name'),
+		'singular_name' => _x('Skills Post', 'post type singular name'),
+		'add_new' => _x('Add New', 'Skills Post'),
+		'add_new_item' => __('Add Skills Post'),
+		'edit_item' => __('Edit Skills Post'),
+		'new_item' => __('New Skills Post'),
+		'view_item' => __('View Post'),
+		'search_items' => __('Search Skills Postings'),
+		'not_found' =>  __('Nothing found'),
+		'not_found_in_trash' => __('Nothing found in Trash'),
+		'parent_item_colon' => ''
+	);
+ 
+	$args = array(
+		'labels' => $labels,
+		'public' => true,
+		'publicly_queryable' => true,
+		'show_ui' => true,
+		'query_var' => true,
+		'menu_icon' => get_stylesheet_directory_uri() . '/thumb.png',
+		'rewrite' => true,
+		'capability_type' => 'post',
+		'hierarchical' => false,
+		'menu_position' => null,
+		'supports' => array('title')
+	  ); 
+ 
+	register_post_type( 'skills_posting' , $args );
+
+
+	register_taxonomy("skills", array("skills_posting"), array("hierarchical" => true, "label" => "Skills", "singular_label" => "Skill", "rewrite" => true));
+	register_taxonomy("regions_skills", array("skills_posting"), array("hierarchical" => true, "label" => "Regions", "singular_label" => "Region", "rewrite" => true));
+	register_taxonomy("time_commitment", array("skills_posting"), array("hierarchical" => true, "label" => "Time Commitment", "singular_label" => "Time Commitment", "rewrite" => true));
+
+	add_action("admin_init", "admin_init");
+
+	function admin_init(){
+  	add_meta_box("skills_form_meta", "Skills Posting Form", "skills_form", "skills_posting", "normal", "low");
+	}
+
+	function skills_form(){
+	global $post;
+  	$custom = get_post_custom($post->ID);
+	  $poster_name = $custom["poster_name"][0];
+	  $poster_email = $custom['poster_email'][0];
+	  $poster_background = $custom['poster_background'][0];
+	  $poster_portfolio = $custom['poster_portfolio'][0];
+	  $poster_desired = $custom['poster_desired'][0];
+
+?>
+	<p>Please fill out the form with some information about yourself and publish when completed. Required fields are listed and all fields are on the right sidebar are optional. Your listing will be reviewed by our Administrator before listed on the site.</p>
+
+	<p>
+		<label>Name:
+			<br>
+			<input type='text' name='poster_name' value=<?= $poster_name; ?> >
+
+		</label>
+		<br>
+		<label>Email:
+			<br>
+			<input type='text' name='poster_email' value=<?= $poster_email; ?> >
+
+		</label>
+		<br><br>
+		<label>Background/Experience: <br>
+ 	  		<?php 
+	
+			$editor_id = 'poster_background';
+			$settings = array(
+				'media_buttons' => false);
+			
+			wp_editor( $poster_background , $editor_id, $settings );
+		
+ 	  		?> 
+ 	  	</label>
+ 	  	<br><br>
+ 	  	<label>Portfolio: <br>
+ 	  		Enter links, images, examples of your work.
+ 	  		<?php 
+	
+			$editor_id = 'poster_portfolio';
+			$settings = array(
+				'media_buttons' => false);
+			
+			wp_editor( $poster_portfolio , $editor_id, $settings );
+		
+ 	  		?> 
+ 	  	</label>
+ 	  	<br><br>
+ 	  	<label>
+ 	  		Describe the experience or the situation you are looking for: <br>
+ 	  		<?php 
+	
+			$editor_id = 'poster_desired';
+			$settings = array(
+				'media_buttons' => false);
+			
+			wp_editor( $poster_desired , $editor_id, $settings );
+		
+ 	  		?> 
+ 	  	</label>
+	</p>
+
+
+<?php 
+	
+	}
+
+	add_action('save_post', 'save_skills_posting');
+
+	function save_skills_posting(){
+  	global $post;
+ 
+	  update_post_meta($post->ID, "poster_name", $_POST["poster_name"]);
+	  update_post_meta($post->ID, "poster_email", $_POST["poster_email"]);
+	  update_post_meta($post->ID, "poster_background", $_POST["poster_background"]);
+	  update_post_meta($post->ID, "poster_portfolio", $_POST["poster_portfolio"]);
+	  update_post_meta($post->ID, "poster_desired", $_POST["poster_desired"]);
+	}
+} //create_skills_listing end
+
 
  ?>

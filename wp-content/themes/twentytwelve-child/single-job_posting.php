@@ -15,9 +15,6 @@ get_header(); ?>
 			<?php while ( have_posts() ) : the_post(); 
 
 					$meta_values = get_post_meta( $id);
-
-
-	
 			?>
 				
 				<h2 class='posting_title'>
@@ -35,6 +32,7 @@ get_header(); ?>
 						<span class='posting_subheading'>How To Apply</span>
 						<br><br>
 						<?= nl2br($meta_values['job_apply'][0]) ?>
+						
 					</p>
 				</div>
 				<div class='posting_sidebar'>

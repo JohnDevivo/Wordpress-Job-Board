@@ -459,7 +459,9 @@ th {
 .thumb-contain {overflow: scroll;
 				height: 300px;}
 
-
+.third-space {width: 30%;
+            display: inline-block;
+            vertical-align: top;}
 #job-listings {margin-right: 3%;}
 
 #skills-listings {}
@@ -481,6 +483,15 @@ th {
 				vertical-align: top;}
 .posting_subheading {font-size: 24px;
 					text-decoration: underline;}
+
+.search_post {border-bottom: 1px solid lightgrey;
+              padding-bottom: 10px;}
+
+/*removes search function from admin bar*/
+#wp-admin-bar-search {display: none;}
+
+
+
 /*small*/
 @media screen and (max-width: 600px) {
 
