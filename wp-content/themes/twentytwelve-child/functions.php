@@ -17,7 +17,7 @@ function change_default_title( $title ){
     if ( 'job_posting' == $screen->post_type ){
         $title = 'Enter Description Here - This is what will show up in Search';
     }
-    if ('skills_posting' == $screen->post_type){
+    if ('opportunity_posting' == $screen->post_type){
     	$title = 'Enter Description Here - This is what will show up in Search';
     }
  
@@ -60,7 +60,7 @@ function create_job_posting() {
 	  ); 
 
 	register_post_type( 'job_posting' , $args );
-	flush_rewrite_rules();
+	// flush_rewrite_rules();
 
 	
 	register_taxonomy("career_fields", array("job_posting"), array("hierarchical" => true, "label" => "Career Fields", "singular_label" => "Career Field", "rewrite" => true));
@@ -181,39 +181,46 @@ function get_the_current_tax_terms_jobs( $post_id )
     // get taxonomies for the current post type
     $taxonomies = get_object_taxonomies( get_post_type( $post_id ) );
 
+    // creates a subheading for each custom taxonomy that is a part of the listing
     foreach ( (array) $taxonomies as $taxonomy) {
+    	echo "<span class='posting_subheading'>";
     	switch ($taxonomy) {
 		    case 'career_fields':
-		        echo "<span class='posting_subheading'>Career Fields </span> <br><br>";
+		        echo "Career Fields</span> <br><br>";
 		        break;
 		    case 'regions':
-		        echo "<span class='posting_subheading'>Regions </span> <br><br>";
+		        echo "Regions</span> <br><br>";
 		        break;
 		    case 'job_types':
-		        echo "<span class='posting_subheading'>Job Types </span> <br><br>";
+		        echo "Job Types</span> <br><br>";
+		        break;
+		    case 'regions_opportunity':
+		        echo "Regions</span> <br><br>";
+		        break;
+		    case 'skills_opportunity':
+		        echo "Skills</span> <br><br>";
+		        break;
+		    case 'time_commitment_opportunity':
+		        echo "Time Commitment Desired</span> <br><br>";
 		        break;
 		}
+
+		// finds the taxonomy terms for the specified post. if it finds taxonomy terms it will list them as links
     	$terms = get_the_terms( $post->ID, $taxonomy );
     	if ($terms == false){
         		echo 'N/A <br>';
         	}
     	if ( !empty( $terms ) )
         {
-
-
         	foreach ($terms as $term) {
         		$term_link =  get_term_link( $term->slug, $taxonomy );
         		echo "<a href=". $term_link. ">".  $term->name . '</a><br>';
-
         	}
 
 	    }
 	    echo "<br>";
 
-    }
-    
-
-    
+    }  
 }
 
 // gets recent listings for the home page
@@ -240,40 +247,61 @@ function get_recent_listings($post_type)
 
 	$posts_array = get_posts( $args );
 
-	$job_listings_array = array();
+	// for job_posting
+	if ($post_type == 'job_posting'){
+		$job_listings_array = array();
 	
 	// creates a formated listing for each entry
-	foreach ($posts_array as $key => $listing) {
-		$job_title = $listing->job_title;
-		$post_title = $listing->post_title;
-		$company_name =  $listing->company_name;
-		$job_description = $listing->job_description;
-		$post_id = $listing->ID;
-		$permalink = get_permalink($post_id);
-		$new_div = '<div class="listing-thumb">';
-		$new_div .= '<b>' . $post_title . '</b>';
-		$new_div .= '<p>' . $company_name .'</p>';
-		$new_div .= '<p>' .substr($job_description, 0,200) .'...</p>';
-		$new_div .='<a href="'. $permalink .'"> View Job Posting </a>';
-		$new_div .= '</div>';
-		array_push($job_listings_array, $new_div);	
+		foreach ($posts_array as $key => $listing) {
+			$job_title = $listing->job_title;
+			$post_title = $listing->post_title;
+			$company_name =  $listing->company_name;
+			$job_description = $listing->job_description;
+			$post_id = $listing->ID;
+			$permalink = get_permalink($post_id);
+			$new_div = '<div class="listing-thumb">';
+			$new_div .= '<b>' . $post_title . '</b>';
+			$new_div .= '<p>' . $company_name .'</p>';
+			$new_div .= '<p>' .substr($job_description, 0,200) .'...</p>';
+			$new_div .='<a href="'. $permalink .'"> View Job Posting </a>';
+			$new_div .= '</div>';
+			array_push($job_listings_array, $new_div);
+		}
+		return $job_listings_array;
 	}
-	return $job_listings_array;
+
+	// for opportunity seekers
+	if ($post_type == 'opportunity_posting'){
+		$opportunity_listings_array = array();
+
+		foreach ($posts_array as $key => $listing) {
+			$post_title = $listing->post_title;
+			$poster_name =  $listing->poster_name;
+			$poster_desired = $listing->poster_desired;
+			$post_id = $listing->ID;
+			$permalink = get_permalink($post_id);
+
+			$new_div = '<div class="listing-thumb">';
+			$new_div .= '<b>' . $post_title . '</b>';
+			$new_div .= '<p>' . $poster_name .'</p>';
+			$new_div .= '<p>' .substr($poster_desired, 0,200) .'...</p>';
+			$new_div .='<a href="'. $permalink .'"> View Job Posting </a>';
+			$new_div .= '</div>';
+			array_push($opportunity_listings_array, $new_div);
+		}
+		return $opportunity_listings_array;
+	}
+	
 
 }
 
-
-
-
-
-
-function job_search_form($form){
+// creates job search form to use used through the site
+function job_search_form(){
 
 	echo $form = '<form role="search" method="get" id="searchform" action=' . home_url( '/' ) . 
 
  	'> ';
  	?>
-
 		<input  type="text" name="s" id="s" placeholder="Search by keywords" value="" />
 		<input type="hidden" name="post_type" value="job_posting" />
 		<br><br>
@@ -317,7 +345,7 @@ function job_search_form($form){
 
 add_filter( 'get_search_form', 'job_search_form' );
 
-
+// returns job description for post
 function job_description($id){
 	$post = get_post_custom($id);
 	return $post['job_description'][0];
@@ -326,21 +354,21 @@ function job_description($id){
 
 
 
-// create custom post for skills listing
+// create custom post for opportunity seekers
 
-	add_action('init', 'create_skills_posting');
+	add_action('init', 'create_seeker_posting');
  
-function create_skills_posting() {
+function create_seeker_posting() {
  
 	$labels = array(
-		'name' => _x('Skills Posting', 'post type general name'),
-		'singular_name' => _x('Skills Post', 'post type singular name'),
-		'add_new' => _x('Add New', 'Skills Post'),
-		'add_new_item' => __('Add Skills Post'),
-		'edit_item' => __('Edit Skills Post'),
-		'new_item' => __('New Skills Post'),
+		'name' => _x('Opportunity Seekers', 'post type general name'),
+		'singular_name' => _x('Opportunity Seeker Post', 'post type singular name'),
+		'add_new' => _x('Add New', 'Opportunity Seeker Post'),
+		'add_new_item' => __('Add Post'),
+		'edit_item' => __('Edit Post'),
+		'new_item' => __('New Post'),
 		'view_item' => __('View Post'),
-		'search_items' => __('Search Skills Postings'),
+		'search_items' => __('Search Opportunity Seeker Postings'),
 		'not_found' =>  __('Nothing found'),
 		'not_found_in_trash' => __('Nothing found in Trash'),
 		'parent_item_colon' => ''
@@ -360,20 +388,20 @@ function create_skills_posting() {
 		'supports' => array('title')
 	  ); 
  
-	register_post_type( 'skills_posting' , $args );
+	register_post_type( 'opportunity_posting' , $args );
 
 
-	register_taxonomy("skills", array("skills_posting"), array("hierarchical" => true, "label" => "Skills", "singular_label" => "Skill", "rewrite" => true));
-	register_taxonomy("regions_skills", array("skills_posting"), array("hierarchical" => true, "label" => "Regions", "singular_label" => "Region", "rewrite" => true));
-	register_taxonomy("time_commitment", array("skills_posting"), array("hierarchical" => true, "label" => "Time Commitment", "singular_label" => "Time Commitment", "rewrite" => true));
+	register_taxonomy("skills_opportunity", array("opportunity_posting"), array("hierarchical" => true, "label" => "Skills", "singular_label" => "Skill", "rewrite" => true));
+	register_taxonomy("regions_opportunity", array("opportunity_posting"), array("hierarchical" => true, "label" => "Regions", "singular_label" => "Region", "rewrite" => true));
+	register_taxonomy("time_commitment_opportunity", array("opportunity_posting"), array("hierarchical" => true, "label" => "Time Commitment", "singular_label" => "Time Commitment", "rewrite" => true));
 
 	add_action("admin_init", "admin_init");
 
 	function admin_init(){
-  	add_meta_box("skills_form_meta", "Skills Posting Form", "skills_form", "skills_posting", "normal", "low");
+  	add_meta_box("opportunity_form_meta", "Opportunity Seeker Posting Form", "opportunity_form", "opportunity_posting", "normal", "low");
 	}
 
-	function skills_form(){
+	function opportunity_form(){
 	global $post;
   	$custom = get_post_custom($post->ID);
 	  $poster_name = $custom["poster_name"][0];
@@ -442,9 +470,9 @@ function create_skills_posting() {
 	
 	}
 
-	add_action('save_post', 'save_skills_posting');
+	add_action('save_post', 'save_opportunity_posting');
 
-	function save_skills_posting(){
+	function save_opportunity_posting(){
   	global $post;
  
 	  update_post_meta($post->ID, "poster_name", $_POST["poster_name"]);
@@ -453,7 +481,70 @@ function create_skills_posting() {
 	  update_post_meta($post->ID, "poster_portfolio", $_POST["poster_portfolio"]);
 	  update_post_meta($post->ID, "poster_desired", $_POST["poster_desired"]);
 	}
-} //create_skills_listing end
+} //create_opportunity_listing end
+
+
+// Search bar for all opportunity seekers - to be used throughout the site
+function opportunity_search_form(){
+echo $form = '<form role="search" method="get" id="searchform" action=' . home_url( '/' ) . 
+
+ 	'> ';
+ 	?>
+		<input  type="text" name="s" id="s" placeholder="Search by keywords" value="" />
+		<input type="hidden" name="post_type" value="opportunity_posting" />
+		<br><br>
+		<select name="regions_opportunity">
+			<option value="">All Regions</option>
+			<option value="hartford">Hartford</option>
+			<option value="fairfield">Fairfield</option>
+			 <option value="litchfield">Litchfield</option>
+			 <option value="middlesex">Middlesex</option>
+			 <option value="new_haven">New Haven</option>
+			 <option value="new_london">New London</option>
+			 <option value="tolland">Tolland</option>
+			 <option value="windham">Windham</option>
+		</select>
+		<select name="skills_opportunity">
+			<option value="">All Skills</option>
+			<option value="administrative-opportunity">Administrative</option>
+			<option value="front-end">Front End Web Dev</option>
+			 <option value="back-end">Back End Web Dev</option>
+			 <option value="photo">Photography</option>
+			 <option value="writing">Writing</option>
+			 <option value="video-opportunity">Videography</option>
+			 <option value="marketing">Marketing</option>
+			 <!-- <option value=""></option>
+			 <option value=""></option> -->
+		</select>
+		<select name="time_commitment_opportunity">
+			<option value="">All Job Types</option>
+			<option value="contract">Contract</option>
+			<option value="full_time">Full Time</option>
+			 <option value="internship">Internship</option>
+			 <option value="part_time">Part Time</option>
+		</select>
+		<br /><br>
+		<input type="submit" id="searchsubmit" value="Search" />
+	</form>
+
+
+<?php
+	
+
+    return $form;
+
+}
+
+function seeker_desired($id){
+	$post = get_post_custom($id);
+	return $post['poster_desired'][0];
+
+}
+
+
+
+
+
 
 
  ?>

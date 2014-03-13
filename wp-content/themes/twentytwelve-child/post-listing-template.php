@@ -16,9 +16,11 @@ get_header(); ?>
 			</div>
 			<div class='third-space'>
 			Fill out our form without registration
+			<br><br>
+			<button><a href="<?= home_url( '/?page_id=261' ) ?>"></a>Post a Job Listing</button>
 			</div>
 			<div class='third-space'>
-			Register and have full control
+			Register and have full control of your posts
 			</div>
 			
 			

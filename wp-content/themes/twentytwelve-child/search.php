@@ -49,8 +49,22 @@ get_header(); ?>
 				<hr>
 				<?php endwhile; 
 			}
-			elseif ($parse_url['post_type'] == 'skills'){
-				
+			elseif ($parse_url['post_type'] == 'opportunity_posting'){
+				while ( have_posts() ) : the_post();
+?>		
+				<div class='search_post'>
+					<a href="<?= get_permalink($the_ID);?>"><?= the_title(); ?></a>
+					<br>
+					What I'm looking for:
+					<p>
+						<?= substr(strip_tags(seeker_desired($the_ID)), 0, 320);?>...<a href="<?= get_permalink($the_ID);?>">Read Full Listing</a>
+					</p>
+					<br>
+					<?= the_taxonomies('template=%s: %l <br>'); ?>
+
+				</div>
+				<hr>
+				<?php endwhile; 
 			}
 			else{
 
@@ -59,33 +73,9 @@ get_header(); ?>
 			}
 			?>
 
-			<!-- /* Start the Loop */ -->
-
-
-			<?php 
-				// while ( have_posts() ) : the_post(); 
-			?>
-			
-				<!-- <div class='search_post'>
-					<a href="<?= get_permalink($the_ID);?>"><?= the_title(); ?></a>
-					<br>
-					Job Description:
-					<p>
-						<?= substr(strip_tags(job_description($the_ID)), 0, 320);?>...<a href="<?= get_permalink($the_ID);?>">Read Full Listing</a>
-					</p>
-					<br>
-					<?= the_taxonomies('template=%s: %l <br>'); ?>
-
-				</div>
-				<hr> -->
-				
-			<?php 
-			// endwhile; 
-			?>
 
 			 <?php wp_simple_pagination(); ?>	
-			<?php 
-			// twentytwelve_content_nav( 'nav-below' ); ?>
+	
 			<div>
 				<h3>Make Another Search</h3>
 				<br><br>
@@ -97,8 +87,12 @@ get_header(); ?>
 				</div>
 				</div>
 				<div id='skills-listings' class='listing-div' >
-					Search for Job Seekers
-
+					<div class='listing-header'>
+						Search for Job Seekers
+						<br>
+						<?php echo opportunity_search_form(); ?>
+					</div>
+					
 				</div>
 			</div>
 
@@ -119,11 +113,12 @@ get_header(); ?>
 				<div>
 					Search For Job Listings
 					<br>
-					<?php echo job_search_form($something); ?>
+					<?php echo job_search_form(); ?>
 
 				</div>
 				<div>
 					Search For Skills Listings
+					<?php echo opportunity_search_form(); ?>
 				</div>
 			</div>
 
