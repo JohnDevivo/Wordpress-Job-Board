@@ -446,7 +446,9 @@ th {
 				background-color: lightgrey;
 				height: auto;
 				}
-
+.index-header {text-align: center;
+                border-bottom: none;
+                padding-top: 0;}
 
 /*.spacer {height: 100px;}*/
 
@@ -456,18 +458,25 @@ th {
 			vertical-align: top;
 			}
 
+.listing-div-alt {width: auto;}
+
+
 .thumb-contain {overflow: scroll;
 				height: 300px;}
 
 .third-space {width: 30%;
             display: inline-block;
-            vertical-align: top;}
+            vertical-align: top;
+            /*border: 1px solid red;*/
+          }
 #job-listings {margin-right: 3%;}
 
-#skills-listings {}
+#opportunity-listings {}
 
-.listing-thumb {border: 1px solid red;
-				padding: 5px;}
+.listing-thumb {
+				padding: 5px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid lightgrey;}
 
 #titlediv {margin: 0}
 
@@ -497,7 +506,7 @@ th {
 
 	.listing-div {width: 100%;
 					}
-
+  .third-space {width: 100%;}
 
 
 }
@@ -509,5 +518,6 @@ th {
 	.listing-div {width: 100%;
 					}
 
-
+  .third-space {width: 100%;
+                margin-bottom: 5%;}
 }

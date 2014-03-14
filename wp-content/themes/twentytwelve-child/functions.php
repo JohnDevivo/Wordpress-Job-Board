@@ -56,7 +56,7 @@ function create_job_posting() {
 		'capability_type' => 'post',
 		'hierarchical' => false,
 		'menu_position' => null,
-		'supports' => array('title')
+		'supports' => array('title','thumbnail')
 	  ); 
 
 	register_post_type( 'job_posting' , $args );
@@ -263,7 +263,7 @@ function get_recent_listings($post_type)
 			$new_div .= '<b>' . $post_title . '</b>';
 			$new_div .= '<p>' . $company_name .'</p>';
 			$new_div .= '<p>' .substr($job_description, 0,200) .'...</p>';
-			$new_div .='<a href="'. $permalink .'"> View Job Posting </a>';
+			$new_div .='<a href="'. $permalink .'"> View Job Opening </a>';
 			$new_div .= '</div>';
 			array_push($job_listings_array, $new_div);
 		}
@@ -285,7 +285,7 @@ function get_recent_listings($post_type)
 			$new_div .= '<b>' . $post_title . '</b>';
 			$new_div .= '<p>' . $poster_name .'</p>';
 			$new_div .= '<p>' .substr($poster_desired, 0,200) .'...</p>';
-			$new_div .='<a href="'. $permalink .'"> View Job Posting </a>';
+			$new_div .='<a href="'. $permalink .'"> View Profile </a>';
 			$new_div .= '</div>';
 			array_push($opportunity_listings_array, $new_div);
 		}
@@ -385,7 +385,7 @@ function create_seeker_posting() {
 		'capability_type' => 'post',
 		'hierarchical' => false,
 		'menu_position' => null,
-		'supports' => array('title')
+		'supports' => array('title','thumbnail')
 	  ); 
  
 	register_post_type( 'opportunity_posting' , $args );
@@ -416,13 +416,13 @@ function create_seeker_posting() {
 	<p>
 		<label>Name:
 			<br>
-			<input type='text' name='poster_name' value=<?= $poster_name; ?> >
+			<input type='text' name='poster_name' value='<?= $poster_name; ?>' >
 
 		</label>
 		<br>
 		<label>Email:
 			<br>
-			<input type='text' name='poster_email' value=<?= $poster_email; ?> >
+			<input type='text' name='poster_email' value='<?= $poster_email; ?>' >
 
 		</label>
 		<br><br>

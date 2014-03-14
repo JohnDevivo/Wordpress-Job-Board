@@ -91,8 +91,7 @@ get_header(); ?>
 						Search for Job Seekers
 						<br>
 						<?php echo opportunity_search_form(); ?>
-					</div>
-					
+					</div>			
 				</div>
 			</div>
 

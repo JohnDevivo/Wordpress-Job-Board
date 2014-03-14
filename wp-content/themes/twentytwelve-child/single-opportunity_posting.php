@@ -16,6 +16,8 @@ get_header(); ?>
 				while ( have_posts() ) : the_post(); 
 
 				$meta_values = get_post_meta( $id);
+			
+				
 			?>
 
 
@@ -50,6 +52,11 @@ get_header(); ?>
 				<p>
 					<!-- <span class='posting_subheading'>Tags: </span>
 					<br><br> -->
+					<div>
+					<?= 
+						get_the_post_thumbnail($page->ID, 'thumbnail');
+					?>
+					</div>
 					<?= get_the_current_tax_terms_jobs( get_the_ID() );?>
 
 				</p>

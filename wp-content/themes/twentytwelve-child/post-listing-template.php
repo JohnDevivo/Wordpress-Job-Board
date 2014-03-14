@@ -17,10 +17,14 @@ get_header(); ?>
 			<div class='third-space'>
 			Fill out our form without registration
 			<br><br>
-			<button><a href="<?= home_url( '/?page_id=261' ) ?>"></a>Post a Job Listing</button>
+			<a href="<?= home_url( '/?page_id=261' ) ?>"><button>Post a Job Listing</button></a>
 			</div>
 			<div class='third-space'>
 			Register and have full control of your posts
+			<br><br>
+			<a href="<?= home_url( '/?page_id=31' ) ?>"><button>Register Here</button></a>
+			<br><br>
+			<a href="<?= home_url( '/?page_id=29' ) ?>"><button>Log In</button></a>
 			</div>
 			
 			

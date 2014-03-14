@@ -13,7 +13,10 @@ get_header();
 <?php 
 	
 ?>
-	
+	<header class="page-header index-header">
+		<h1>Welcome to the Whiteboard Job Board</h1>	
+		<h3>Find jobs. Find talent. Find the right startup opportunity.</h3>
+	</header>
 	
 	<div id='listings-contain'>
 		<!-- for job listings -->
