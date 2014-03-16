@@ -7,22 +7,24 @@
 get_header(); ?>
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery-1.9.1.js"></script>
-<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-  <script>
-  $(function() {
-    $( "#listings-contain" ).tabs();
-  });
-  </script>
+
+<script>
+ //  $(function() {
+ //    $( "#listings-contain" ).tabs();
+
+
+ //    $('#job_board_menu').click(function(){
+    	
+ //    	$('.menu-toggle').toggleClass('toggled-on');
+ //    	$('.nav-menu').toggleClass('toggled-on');
+ //    });
+ //  });
+ //  </script>
 
 	<section id="primary" class="site-content">
 		<div id="content" role="main">
 			
 			<header class="page-header index-header">
-				<!-- <h1 class="page-title"><?php printf( __( 'Search Results for: %s', 'twentytwelve' ), '<span>' . get_search_query() . '</span>' ); ?></h1> -->
-				<br>
-				<!-- Total Results: 
-				<?= $total_results = $wp_query->found_posts; ?> -->
 				<h1>Welcome to the Whiteboard Job Board</h1>	
 				<h3>Find jobs. Find talent. Find the right startup opportunity.</h3>
 			</header>

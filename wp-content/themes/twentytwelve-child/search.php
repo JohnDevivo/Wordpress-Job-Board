@@ -11,15 +11,16 @@ get_header(); ?>
 
 	<section id="primary" class="site-content">
 		<div id="content" role="main">
-
+		
 		<?php if ( have_posts() ) : ?>
 
 			<header class="page-header">
+
 				<h1 class="page-title"><?php printf( __( 'Search Results for: %s', 'twentytwelve' ), '<span>' . get_search_query() . '</span>' ); ?></h1>
 				<br>
 				<!-- Total Results: 
 				<?= $total_results = $wp_query->found_posts; ?> -->
-				<?php wp_simple_pagination(); ?>	
+		
 			</header>
 			
 			<?php 
@@ -43,7 +44,14 @@ get_header(); ?>
 						<?= substr(strip_tags(job_description($the_ID)), 0, 320);?>...<a href="<?= get_permalink($the_ID);?>">Read Full Listing</a>
 					</p>
 					<br>
-					<?= the_taxonomies('template=%s: %l <br>'); ?>
+					<!-- returns list of all custom taxonomy with a link -->
+<?php 				
+				$taxonomies = array_map( 'strip_tags', get_the_taxonomies() );
+
+				foreach ($taxonomies as $key => $value) {
+					echo $value . "<br>";
+				}
+?>
 
 				</div>
 				<hr>
@@ -71,11 +79,12 @@ get_header(); ?>
 
 
 			}
+
 			?>
 
+<?= search_pagination(); ?>
 
-			 <?php wp_simple_pagination(); ?>	
-	
+<br><br>
 			<div>
 				<h3>Make Another Search</h3>
 				<br><br>
@@ -88,7 +97,7 @@ get_header(); ?>
 				</div>
 				<div id='skills-listings' class='listing-div' >
 					<div class='listing-header'>
-						Search for Job Seekers
+						Search for Opportunity Seekers
 						<br>
 						<?php echo opportunity_search_form(); ?>
 					</div>			

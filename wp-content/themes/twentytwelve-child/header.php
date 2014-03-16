@@ -24,6 +24,14 @@
 <title><?php wp_title( '|', true, 'right' ); ?></title>
 <link rel="profile" href="http://gmpg.org/xfn/11" />
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
+
+<!-- Added query and custom JS for tabs, job board menu -->
+<script src="//code.jquery.com/jquery-1.9.1.js"></script>
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script type="text/javascript" src="<?php bloginfo('template_url'); ?>-child/js/job_board.js"></script>
+<!-- End -->
+
+
 <?php // Loads HTML5 JavaScript file to add support for HTML5 elements in older IE versions. ?>
 <!--[if lt IE 9]>
 <script src="<?php echo get_template_directory_uri(); ?>/js/html5.js" type="text/javascript"></script>
@@ -39,11 +47,14 @@
 			<h2 class="site-description"><?php bloginfo( 'description' ); ?></h2> -->
 		</hgroup>
 
-		<nav id="site-navigation" class="main-navigation" role="navigation">
+<!-- Removed default menu and replaced with custom menu only for job board -->
+<?= job_board_menu();?>
+<!--  <nav id="site-navigation" class="main-navigation" role="navigation">
 			<h3 class="menu-toggle"><?php _e( 'Menu', 'twentytwelve' ); ?></h3>
 			<a class="assistive-text" href="#content" title="<?php esc_attr_e( 'Skip to content', 'twentytwelve' ); ?>"><?php _e( 'Skip to content', 'twentytwelve' ); ?></a>
 			<?php wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) ); ?>
-		</nav><!-- #site-navigation -->
+</nav>  -->
+		<!-- #site-navigation -->
 
 		<?php if ( get_header_image() ) : ?>
 		<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><img src="<?php header_image(); ?>" class="header-image" width="<?php echo get_custom_header()->width; ?>" height="<?php echo get_custom_header()->height; ?>" alt="" /></a>

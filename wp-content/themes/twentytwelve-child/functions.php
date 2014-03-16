@@ -541,10 +541,111 @@ function seeker_desired($id){
 
 }
 
+function search_pagination() {
+
+	if( is_singular() )
+		return;
+
+	global $wp_query;
+
+	/** Stop execution if there's only 1 page */
+	if( $wp_query->max_num_pages <= 1 )
+		return;
+
+	$paged = get_query_var( 'paged' ) ? absint( get_query_var( 'paged' ) ) : 1;
+	$max   = intval( $wp_query->max_num_pages );
+
+	/**	Add current page to the array */
+	if ( $paged >= 1 )
+		$links[] = $paged;
+
+	/**	Add the pages around the current page to the array */
+	if ( $paged >= 3 ) {
+		$links[] = $paged - 1;
+		$links[] = $paged - 2;
+	}
+
+	if ( ( $paged + 2 ) <= $max ) {
+		$links[] = $paged + 2;
+		$links[] = $paged + 1;
+	}
+
+	echo '<div class="navigation"><ul>' . "\n";
+
+	/**	Previous Post Link */
+	if ( get_previous_posts_link() )
+		printf( '<li>%s</li>' . "\n", get_previous_posts_link('Previous Page') );
+
+	/**	Link to first page, plus ellipses if necessary */
+	if ( ! in_array( 1, $links ) ) {
+		$class = 1 == $paged ? ' class="active"' : '';
+
+		printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( 1 ) ), '1' );
+
+		if ( ! in_array( 2, $links ) )
+			echo '<li>…</li>';
+	}
+
+	/**	Link to current page, plus 2 pages in either direction if necessary */
+	sort( $links );
+	foreach ( (array) $links as $link ) {
+		$class = $paged == $link ? ' class="active"' : '';
+		printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( $link ) ), $link );
+	}
+
+	/**	Link to last page, plus ellipses if necessary */
+	if ( ! in_array( $max, $links ) ) {
+		if ( ! in_array( $max - 1, $links ) )
+			echo '<li>…</li>' . "\n";
+
+		$class = $paged == $max ? ' class="active"' : '';
+		printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( $max ) ), $max );
+	}
+
+	/**	Next Post Link */
+	if ( get_next_posts_link() )
+		printf( '<li>%s</li>' . "\n", get_next_posts_link('Next Page') );
+
+	echo '</ul></div>' . "\n";
+
+}
+
+function register_my_menu() {
+  register_nav_menu('jb-menu',__( 'Job Board Menu' ));
+}
+add_action( 'init', 'register_my_menu' );
+
+// function job_board_menu(){
+
+
+?>
+<!-- 	<div id='job_board_menu'>
+ 		<ul>
+ 			<li><a href="<?= home_url('?s=&post_type=job_posting')?>">Browse Jobs</a></li>
+ 			<li><a href="<?= home_url('?s=&post_type=opportunity_posting')?>">Browse Opportunity Seekers</a></li>
+ 			<li><a href="<?= home_url('post-a-listing')?>">Post a Listing</a></li>
+ 			<li><a href="<?= home_url('register')?>">Register</a></li>
+ 			<li><a href="<?= home_url('contact-us')?>">Contact Us</a></li>
+ 			<li><a href="">Login/Logout</a></li>
+ 		</ul>
+ 	</div>  -->
 
 
 
+<?php	
 
+// }
 
+function job_board_menu(){
+
+?>
+	<nav id="job-navigation" class="main-navigation" role="navigation">
+	<h3 id='job_board_menu' class="menu-toggle job_menu"><?php _e( 'Menu', 'twentytwelve' ); ?></h3>
+	<?php wp_nav_menu( array( 'theme_location' => 'jb-menu', 'menu_class' => 'nav-menu job_menu' ) ); ?>
+
+</nav>
+
+<?php
+}
 
  ?>

@@ -450,7 +450,11 @@ th {
                 border-bottom: none;
                 padding-top: 0;}
 
-/*.spacer {height: 100px;}*/
+/*just to show margins - remove for final product*/
+#page {margin-top: 10%;
+        margin-left: 15%;
+        margin-right: 15%;}
+
 
 .listing-div {width: 45%;
 			border: 1px solid green;
@@ -499,7 +503,13 @@ th {
 /*removes search function from admin bar*/
 #wp-admin-bar-search {display: none;}
 
+.navigation {width: 100%;}
+.navigation ul li{display: inline-block;
+                  vertical-align: top;}
 
+/*#job_board_menu ul li {display: inline-block;
+                      vertical-align: top;
+                      }*/
 
 /*small*/
 @media screen and (max-width: 600px) {
@@ -508,6 +518,9 @@ th {
 					}
   .third-space {width: 100%;}
 
+#page {margin-top: 0%;
+        margin-left: 0%;
+        margin-right: 0%;}
 
 }
 
@@ -520,4 +533,8 @@ th {
 
   .third-space {width: 100%;
                 margin-bottom: 5%;}
+
+  #page {margin-top: 0%;
+        margin-left: 0%;
+        margin-right: 0%;}
 }

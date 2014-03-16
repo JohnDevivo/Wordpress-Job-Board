@@ -36,6 +36,11 @@ get_header(); ?>
 					</p>
 				</div>
 				<div class='posting_sidebar'>
+					<div>
+					<?= 
+						get_the_post_thumbnail($page->ID, 'thumbnail');
+					?>
+					</div>
 					<p>
 						<span class='posting_subheading'>Company Name: </span>
 						<br><br>
