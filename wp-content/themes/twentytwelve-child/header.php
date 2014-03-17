@@ -26,9 +26,9 @@
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 
 <!-- Added query and custom JS for tabs, job board menu -->
-<script src="//code.jquery.com/jquery-1.9.1.js"></script>
+<!--<script src="//code.jquery.com/jquery-1.9.1.js"></script>
 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-<script type="text/javascript" src="<?php bloginfo('template_url'); ?>-child/js/job_board.js"></script>
+<script type="text/javascript" src="<?php bloginfo('template_url'); ?>-child/js/job_board.js"></script>-->
 <!-- End -->
 
 

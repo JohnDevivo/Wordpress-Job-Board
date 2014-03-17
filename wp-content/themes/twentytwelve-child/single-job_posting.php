@@ -12,10 +12,14 @@ get_header(); ?>
 	<div id="primary" class="site-content">
 		<div id="content" role="main">
 
+				
 			<?php while ( have_posts() ) : the_post(); 
 
 					$meta_values = get_post_meta( $id);
+
 			?>
+
+
 				
 				<h2 class='posting_title'>
 					<?= $meta_values['job_title'][0]; ?>
@@ -61,6 +65,9 @@ get_header(); ?>
 						<?= get_the_current_tax_terms_jobs( get_the_ID() );?>
 
 					</p>
+					
+						
+					
 
 				</div>
 				

@@ -440,7 +440,14 @@ th {
 
 
 /*============normalize end===================*/
+/*just to show margins - remove for final product*/
+#page {margin-top: 10%;
+        margin-left: 15%;
+        margin-right: 15%;}
 
+
+button {background-color: lightgrey;}
+a button  {color: black;}
 .listing-header {
 				padding: 10px;
 				background-color: lightgrey;
@@ -450,10 +457,7 @@ th {
                 border-bottom: none;
                 padding-top: 0;}
 
-/*just to show margins - remove for final product*/
-#page {margin-top: 10%;
-        margin-left: 15%;
-        margin-right: 15%;}
+
 
 
 .listing-div {width: 45%;
@@ -462,8 +466,10 @@ th {
 			vertical-align: top;
 			}
 
-.listing-div-alt {width: auto;}
+.listing-div-alt {width: auto;
+                  padding: 0;}
 
+#job-listings {padding: 0px;}
 
 .thumb-contain {overflow: scroll;
 				height: 300px;}
@@ -473,9 +479,9 @@ th {
             vertical-align: top;
             /*border: 1px solid red;*/
           }
-#job-listings {margin-right: 3%;}
 
-#opportunity-listings {}
+
+#opportunity-listings {padding: 0;}
 
 .listing-thumb {
 				padding: 5px;
@@ -520,7 +526,10 @@ th {
 
 #page {margin-top: 0%;
         margin-left: 0%;
-        margin-right: 0%;}
+        margin-right: 0%;
+        padding: 10px;}
+
+#listings-contain ul li a {font-size: 12px;}
 
 }
 

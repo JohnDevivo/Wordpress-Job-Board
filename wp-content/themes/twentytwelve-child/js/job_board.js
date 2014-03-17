@@ -10,5 +10,16 @@ $(function() {
     	$('.job_menu').toggleClass('toggled-on');
     });
 
+// media Match for home page browse listings
+//     var mq = window.matchMedia( "(min-width: 500px)" );
+//     if (mq.matches) {
+//   // window width is at least 500px
+//   $( "#listings-contain" ).tabs();
+// }
+// else {
+//   // window width is less than 500px
+//   $('#listings-contain').accordion();
+// }
+
   });
 

@@ -51,7 +51,7 @@ function create_job_posting() {
 		'publicly_queryable' => true,
 		'show_ui' => true,
 		'query_var' => true,
-		'menu_icon' => get_stylesheet_directory_uri() . '/thumb.png',
+		'menu_icon' => get_stylesheet_directory_uri() . '/job.png',
 		'rewrite' => true,
 		'capability_type' => 'post',
 		'hierarchical' => false,
@@ -380,7 +380,7 @@ function create_seeker_posting() {
 		'publicly_queryable' => true,
 		'show_ui' => true,
 		'query_var' => true,
-		'menu_icon' => get_stylesheet_directory_uri() . '/thumb.png',
+		'menu_icon' => get_stylesheet_directory_uri() . '/seeker.png',
 		'rewrite' => true,
 		'capability_type' => 'post',
 		'hierarchical' => false,
@@ -618,24 +618,6 @@ add_action( 'init', 'register_my_menu' );
 // function job_board_menu(){
 
 
-?>
-<!-- 	<div id='job_board_menu'>
- 		<ul>
- 			<li><a href="<?= home_url('?s=&post_type=job_posting')?>">Browse Jobs</a></li>
- 			<li><a href="<?= home_url('?s=&post_type=opportunity_posting')?>">Browse Opportunity Seekers</a></li>
- 			<li><a href="<?= home_url('post-a-listing')?>">Post a Listing</a></li>
- 			<li><a href="<?= home_url('register')?>">Register</a></li>
- 			<li><a href="<?= home_url('contact-us')?>">Contact Us</a></li>
- 			<li><a href="">Login/Logout</a></li>
- 		</ul>
- 	</div>  -->
-
-
-
-<?php	
-
-// }
-
 function job_board_menu(){
 
 ?>
@@ -647,5 +629,18 @@ function job_board_menu(){
 
 <?php
 }
+
+
+function remove_items_from_dashboard()
+{
+	if ( !current_user_can('administrator') ){
+  		 remove_menu_page( 'edit.php' );
+  		 remove_menu_page( 'edit-comments.php' );
+  		 remove_menu_page( 'wpcf7');
+	}
+
+
+}
+add_action( 'admin_menu', 'remove_items_from_dashboard' );
 
  ?>

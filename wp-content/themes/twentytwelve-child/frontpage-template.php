@@ -32,70 +32,54 @@ get_header(); ?>
 
 			<div id='listings-contain'>
 				<ul>
-    <li><a href="#job-listings">Job Openings </a></li>
-    <li><a href="#opportunity-listings">Opportunity Seekers</a></li>
-  </ul>
+				    <li><a href="#job-listings">Job Openings </a></li>
+				    <li><a href="#opportunity-listings">Opportunity Seekers</a></li>
+			  	</ul>
 		<!-- for job listings -->
-		<div id='job-listings' class='listing-div-alt'>
+				<div id='job-listings' class='listing-div-alt'>
 			<!-- has the job search form -->
 			
 			<!-- displays the most recent job listings -->
-			<div class='thumb-contain'>
+					<div class='thumb-contain'>
 			
-<?php
-	
+<?php	
 	$job_listings_array = get_recent_listings('job_posting');
 	foreach ($job_listings_array as $key => $value) {
 		echo $value;
 	}
-
-
-
 ?>
-			<br><br>
-			<a href="?s=&post_type=job_posting">Browse All Job Listings</a>
-			</div>
-			<div class='listing-header'>
-				<!-- <b>Job Listings</b> -->
-				
-			
+					<br><br>
+					<a href="?s=&post_type=job_posting">Browse All Job Listings</a>
+					</div>
+					<div class='listing-header'>			
 <?php 
 	echo job_search_form(); 
-
-?>
-					
-			</div>
-			
-		</div>
+?>			
+					</div>		
+				</div>
 
 		<!-- container for opportunity seekers -->
-		<div id='opportunity-listings' class='listing-div-alt' >
+				<div id='opportunity-listings' class='listing-div-alt' >
 			<!-- shows the opportunity seeker search bar -->
 			
 			<!-- lists recent opportunity seeker listing -->
-			<div class='thumb-contain'>
-				
+					<div class='thumb-contain'>			
 <?php
 	$opportunity_listings_array = get_recent_listings('opportunity_posting');
 	foreach ($opportunity_listings_array as $key => $value) {
 		echo $value;
 	}
-
 ?>
-			<br><br>
-			<a href="?s=&post_type=opportunity_posting">Browse All Opportunity Seekers</a>
-			</div>
-			<div class='listing-header'>
-<!-- 			<b>Opportunity Seekers</b>
-			<br><br>	 -->
-
+						<br><br>
+						<a href="?s=&post_type=opportunity_posting">Browse All Opportunity Seekers</a>
+					</div>
+					<div class='listing-header'>
 <?php 
-	// echo job_search_form($something); 
 	echo opportunity_search_form();
 ?>				
-			</div>
+					</div>
 
-		</div>
+				</div>
 
 	</div>
 
