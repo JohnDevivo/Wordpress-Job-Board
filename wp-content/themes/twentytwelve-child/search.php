@@ -11,7 +11,7 @@ get_header(); ?>
 
 	<section id="primary" class="site-content">
 		<div id="content" role="main">
-		
+
 		<?php if ( have_posts() ) : ?>
 
 			<header class="page-header">
@@ -68,8 +68,13 @@ get_header(); ?>
 						<?= substr(strip_tags(seeker_desired($the_ID)), 0, 320);?>...<a href="<?= get_permalink($the_ID);?>">Read Full Listing</a>
 					</p>
 					<br>
-					<?= the_taxonomies('template=%s: %l <br>'); ?>
+<?php 				
+				$taxonomies = array_map( 'strip_tags', get_the_taxonomies() );
 
+				foreach ($taxonomies as $key => $value) {
+					echo $value . "<br>";
+				}
+?>
 				</div>
 				<hr>
 				<?php endwhile; 
@@ -88,14 +93,14 @@ get_header(); ?>
 			<div>
 				<h3>Make Another Search</h3>
 				<br><br>
-				<div id='job-listings' class='listing-div'>
+				<div id='job-listings' class='search-page-search-div'>
 				<div class='listing-header'>
 					Search For Job Listings
 					<br>
 					<?php echo job_search_form($something); ?>
 				</div>
 				</div>
-				<div id='skills-listings' class='listing-div' >
+				<div id='skills-listings' class='search-page-search-div alignright'  >
 					<div class='listing-header'>
 						Search for Opportunity Seekers
 						<br>

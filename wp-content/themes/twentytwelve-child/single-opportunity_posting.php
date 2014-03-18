@@ -57,9 +57,24 @@ get_header(); ?>
 						get_the_post_thumbnail($page->ID, 'thumbnail');
 					?>
 					</div>
-					<?= get_the_current_tax_terms_jobs( get_the_ID() );?>
+					<?= get_the_current_tax_terms( get_the_ID() );?>
 
 				</p>
+				<div>
+						<span class='posting_subheading'>Share this Post</span>
+						<br><br>
+
+						<a href="https://www.facebook.com/sharer/sharer.php?u=<?= get_permalink();?>" target="_blank"><img src="../../wp-content/themes/twentytwelve-child/share.png"></a>
+						<br><br>
+						<!-- Twitter tweet button will not work for localhost and will only work on live url. -->
+						<a href="https://twitter.com/share" class="twitter-share-button" data-text="Check out this listing from the NeWhiteBoard:" data-size="large" data-count="none">Tweet</a>
+						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+						<br><br>
+						Copy Link:
+						<input value='<?= get_permalink();?>' readonly>
+						
+
+					</div>
 
 			</div>
 

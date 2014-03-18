@@ -460,7 +460,7 @@ a button  {color: black;}
 
 
 
-.listing-div {width: 45%;
+.search-page-search-div {width: 48%;
 			border: 1px solid green;
 			display: inline-block;
 			vertical-align: top;
@@ -493,9 +493,10 @@ a button  {color: black;}
 .posting_title {font-size: 30px;}
 
 .posting_main {
-				width: 65%;
+				width: 60%;
 				display: inline-block;
-				vertical-align: top;}
+				vertical-align: top;
+        margin-right: 4%;}
 .posting_sidebar {
 				  width: 30%;
 				  display: inline-block;
@@ -513,14 +514,13 @@ a button  {color: black;}
 .navigation ul li{display: inline-block;
                   vertical-align: top;}
 
-/*#job_board_menu ul li {display: inline-block;
-                      vertical-align: top;
-                      }*/
+.share_url_textarea {height: 100px;}
 
 /*small*/
 @media screen and (max-width: 600px) {
 
-	.listing-div {width: 100%;
+	.search-page-search-div {width: 100%;
+              
 					}
   .third-space {width: 100%;}
 
@@ -531,14 +531,22 @@ a button  {color: black;}
 
 #listings-contain ul li a {font-size: 12px;}
 
+.posting_main {
+        width: 100%;
+        display: block;
+        margin-bottom: 15%;}
+.posting_sidebar {
+          width: 100%;
+          display: block;
+       }
 }
 
 /*medium*/
 @media screen and (max-width: 960px) {
 
 	
-	.listing-div {width: 100%;
-					}
+	.search-page-search-div {
+					margin-bottom: 20px;}
 
   .third-space {width: 100%;
                 margin-bottom: 5%;}

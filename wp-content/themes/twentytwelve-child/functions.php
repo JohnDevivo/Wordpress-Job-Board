@@ -176,7 +176,7 @@ function create_job_posting() {
  * @param int $post_id
  * @return string
  */
-function get_the_current_tax_terms_jobs( $post_id )
+function get_the_current_tax_terms( $post_id )
 {
     // get taxonomies for the current post type
     $taxonomies = get_object_taxonomies( get_post_type( $post_id ) );
@@ -214,7 +214,7 @@ function get_the_current_tax_terms_jobs( $post_id )
         {
         	foreach ($terms as $term) {
         		$term_link =  get_term_link( $term->slug, $taxonomy );
-        		echo "<a href=". $term_link. ">".  $term->name . '</a><br>';
+        		echo $term->name . '<br>';
         	}
 
 	    }
@@ -642,5 +642,60 @@ function remove_items_from_dashboard()
 
 }
 add_action( 'admin_menu', 'remove_items_from_dashboard' );
+
+
+
+// begin post expiration
+if (!wp_next_scheduled('make_post_expire')) {
+	wp_schedule_event( time(), 'daily', 'make_post_expire' );
+}
+
+add_action( 'make_post_expire', 'post_expiration' ); 
+
+// make sure it only applies to job_posts and opportunity seekers
+function post_expiration(){
+	// set variable for # of days post should be active
+		
+	// check the current datetime
+
+	// check the datetime of all job & opportunity listings
+
+	// if any of them are expired change their status to pending & send an email to poster & admin letting them know their post expired
+
+	// have this function run daily 
+
+	// wp_mail('j_poch@yahoo.com', 'Automatic email', 'Hello, this is an automatically scheduled email from WordPress.');
+
+}
+
+function test_post_expiration(){
+	// how many days each post should be active
+	$days_active = 30;
+	// $current_time = date(DateTime('Y-m-d H:i:s'));
+	$current_time = date('Y-m-d H:i:s');
+
+	$args = array(
+	'posts_per_page'   => -1,
+	'offset'           => 0,
+	'category'         => '',
+	'orderby'          => 'post_date',
+	'order'            => 'ASC',
+	'include'          => '',
+	'exclude'          => '',
+	'meta_key'         => '',
+	'meta_value'       => '',
+	'post_type'        => array('job_posting', 'opportunity_posting'),
+	'post_mime_type'   => '',
+	'post_parent'      => '',
+	'post_status'      => 'publish',
+	'suppress_filters' => true );
+
+	$all_posts_array = get_posts( $args );
+
+
+	return $all_posts_array;
+	// return $current_time;
+
+}
 
  ?>
